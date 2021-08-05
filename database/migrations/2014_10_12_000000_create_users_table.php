@@ -15,8 +15,14 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('firstname', 120);
+            $table->string('lastname', 120);
+            $table->string('email', 100)->unique();
+            $table->tinyInteger('phonenumber')->unique();
+            $table->boolean('isVerified')->default(false)->comment('false: user not verified, true: user verified');
+            $table->string('utype')->default('USR')->comment('ADM for admin, USR for customer/client');
+            $table->string('referal_link', 120);
+            $table->string('parent_referal_code', 120);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
