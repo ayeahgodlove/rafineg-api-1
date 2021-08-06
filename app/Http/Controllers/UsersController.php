@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
 {
@@ -15,18 +16,12 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            "success" => true,
+            "data" => UserResource::collection(User::all()),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,9 +29,15 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(UserRequest $request)
     {
-        //
+        $data = $request->validated();
+        $user = User::create($data);
+        return response()->json([
+            "success" => true,
+            "data" => new UserResource($user),
+            "message" => "User was added successfully"
+        ]);
     }
 
     /**
@@ -47,18 +48,10 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
+        return response()->json([
+            "success" => true,
+            "data" => new UserResource($user),
+        ]);
     }
 
     /**
@@ -68,9 +61,21 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $data = $request->validated();
+        if ($user->update($data)) {
+            return response()->json([
+                "success" => true,
+                "data" => new UserResource($user),
+                "message" => "User has been updated successfully"
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "data" => new UserResource($user),
+            "message" => "Error: user has not been updated!"
+        ]);
     }
 
     /**
@@ -81,6 +86,17 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if ($user->delete()) {
+            return response()->json([
+                "success" => true,
+                "data" => null,
+                "message" => "User has been deleted successfully"
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "data" => new UserResource($user),
+            "message" => "An error occured. User could not be deleted"
+        ]);
     }
 }
