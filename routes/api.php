@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,22 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/products', function() {
-    return ['product-one' => "Telephone"];
+
+Route::post('signup', [AuthController::class, 'signup']);
+Route::post('signin', [AuthController::class, 'signin']);
+
+Route::get('test', fn () => response()->json([
+    "success" => true,
+    "data" => "hello there"
+]));
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::apiResource('contracts', ContractsController::class);
 });
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact info@website.com'
+    ], 404);
 });
