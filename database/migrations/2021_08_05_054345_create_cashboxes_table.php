@@ -15,7 +15,7 @@ class CreateCashboxesTable extends Migration
     {
         Schema::create('cashboxes', function (Blueprint $table) {
             $table->id();
-            $table->string('user');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->integer('balance');
             $table->timestamp('last_transaction');
             $table->timestamps();

@@ -15,11 +15,11 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('user');
-            $table->text('biography');
+            $table->foreignId('user_id')->constrained();
+            $table->text('bio');
             $table->string('address', 50);
-            $table->tinyInteger('gender');
-            $table->timestamp('dateofbirth');
+            $table->enum('gender', ["male", "female"]);
+            $table->date('date_of_birth');
             $table->string('image');
             $table->timestamps();
         });
