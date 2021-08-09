@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PackageRequest;
+use App\Http\Resources\PackageResource;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class PackagesController extends Controller
@@ -13,7 +16,10 @@ class PackagesController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            "success" => true,
+            "data" => PackageResource::collection(Package::all()),
+        ]);
     }
 
     /**
@@ -22,9 +28,21 @@ class PackagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PackageRequest $request)
     {
-        //
+        $data = $request->validated();
+        if (Package::create($data)) {
+            return response()->json([
+                "success" => true,
+                "data" => new PackageResource($data),
+                "message" => "New package has been added"
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "data" => null,
+            "message" => "Package could not be created."
+        ]);
     }
 
     /**
@@ -33,9 +51,20 @@ class PackagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Package $package)
     {
-        //
+        if ($package->exits()) {
+            return response()->json([
+                "success" => true,
+                "data" => new PackageResource($package),
+                "message" => ""
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "data" => null,
+            "message" => "Package does not exist."
+        ]);
     }
 
     /**
@@ -45,9 +74,22 @@ class PackagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PackageRequest $request, Package $package)
     {
-        //
+        if ($package->exits()) {
+            $data = $request->validated();
+            $package->update($data);
+            return response()->json([
+                "success" => true,
+                "data" => new PackageResource($package),
+                "message" => "Package has been updated successfully"
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "data" => null,
+            "message" => "Package could not be updated"
+        ]);
     }
 
     /**
@@ -56,8 +98,26 @@ class PackagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Package $package)
     {
-        //
+        if ($package->exits()) {
+            if ($package->delete()) {
+                return response()->json([
+                    "success" => true,
+                    "data" => null,
+                    "message" => "Package deleted successfully"
+                ], 201);
+            }
+            return response()->json([
+                "success" => false,
+                "data" => null,
+                "message" => "Package could not be deleted"
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "data" => null,
+            "message" => "Package does not exist"
+        ]);
     }
 }

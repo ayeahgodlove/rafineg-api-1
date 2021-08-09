@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractsController;
+use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,10 +29,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::apiResource('contracts', ContractsController::class);
     Route::apiResource('users', UsersController::class);
+    Route::apiResource('packages', PackagesController::class);
 });
 
 Route::fallback(function () {
     return response()->json([
-        'message' => 'Page Not Found. If error persists, contact info@website.com'
+        "success" => false,
+        "message" => 'Page Not Found. If error persists, contact info@website.com'
     ], 404);
 });
