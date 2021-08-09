@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateContractRequest;
-use App\Http\Requests\UpdateContractRequest;
-use App\Http\Resources\ContractResource;
-use App\Models\Contract;
+use Illuminate\Http\Request;
+use App\Http\Requests\CreateTransactionRequest;
+use App\Http\Requests\UpdateTransactionRequest;
+use App\Http\Resources\TransactionResource;
+use App\Models\Transaction;
 
-class ContractsController extends Controller
+class TransactionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +19,8 @@ class ContractsController extends Controller
     {
         return response()->json([
             "success" => true,
-            "data" => ContractResource::collection(Contract::all()),
-        ]);
+            "data" => TransactionResource::collection(Transaction::all()),
+        ]);   
     }
 
     /**
@@ -28,28 +29,28 @@ class ContractsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateContractRequest $request)
+    public function store(CreateTransactionRequest $request)
     {
         $data = $request->validated();
-        $contract = Contract::create($data);
+        $transaction = Transaction::create($data);
         return response()->json([
             "success" => true,
-            "data" => new ContractResource($contract),
-            "message" => "User was added successfully"
+            "data" => new TransactionResource($transaction),
+            "message" => "Transaction was added successfully"
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contract $contract)
+    public function show(Transaction $transaction)
     {
         return response()->json([
             "success" => true,
-            "data" => new ContractResource($contract),
+            "data" => new TransactionResource($transaction),
         ]);
     }
 
@@ -57,44 +58,44 @@ class ContractsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateContractRequest $request, Contract $contract)
+    public function update(UpdateTransactionRequest $request, Transaction $transaction)
     {
         $data = $request->validated();
-        if ($contract->update($data)) {
+        if ($transaction->update($data)) {
             return response()->json([
                 "success" => true,
-                "data" => new ContractResource($contract),
-                "message" => "Contract has been updated successfully"
+                "data" => new TransactionResource($transaction),
+                "message" => "Transaction has been updated successfully"
             ]);
         }
         return response()->json([
             "success" => false,
-            "data" => new ContractResource($contract),
-            "message" => "Error: Contract has not been updated!"
+            "data" => new TransactionResource($transaction),
+            "message" => "Error: Transaction has not been updated!"
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy(Transaction $transaction)
     {
-        if ($contract->delete()) {
+        if ($transaction->delete()) {
             return response()->json([
                 "success" => true,
                 "data" => null,
-                "message" => "Contract has been deleted successfully"
+                "message" => "Transaction has been deleted successfully"
             ]);
         }
         return response()->json([
             "success" => false,
-            "data" => new ContractResource($contract),
+            "data" => new TransactionResource($transaction),
             "message" => "An error occured. Contract could not be deleted"
         ]);
     }
