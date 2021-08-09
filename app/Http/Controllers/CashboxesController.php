@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateContractRequest;
-use App\Http\Requests\UpdateContractRequest;
-use App\Http\Resources\ContractResource;
-use App\Models\Contract;
+use Illuminate\Http\Request;
+use App\Http\Requests\CreateCashboxRequest;
+use App\Http\Requests\UpdateCashboxRequest;
+use App\Http\Resources\CashboxResource;
 
-class ContractsController extends Controller
+class CashboxesController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class ContractsController extends Controller
     {
         return response()->json([
             "success" => true,
-            "data" => ContractResource::collection(Contract::all()),
+            "data" => CashboxResource::collection(Cashbox::all()),
         ]);
     }
 
@@ -28,28 +28,28 @@ class ContractsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateContractRequest $request)
+    public function store(CreateCashboxRequest $request)
     {
         $data = $request->validated();
-        $contract = Contract::create($data);
+        $casbox = Cashbox::create($data);
         return response()->json([
             "success" => true,
-            "data" => new ContractResource($contract),
-            "message" => "User was added successfully"
+            "data" => new CashboxResource($casbox),
+            "message" => "Cashbox was added successfully"
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contract $contract)
+    public function show(Cashbox $cashbox)
     {
         return response()->json([
             "success" => true,
-            "data" => new ContractResource($contract),
+            "data" => new CashboxResource($cashbox),
         ]);
     }
 
@@ -57,45 +57,46 @@ class ContractsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateContractRequest $request, Contract $contract)
+    public function update(UpdateCashboxRequest $request, Cashbox $cashbox)
     {
         $data = $request->validated();
-        if ($contract->update($data)) {
+        if ($cashbox->update($data)) {
             return response()->json([
                 "success" => true,
-                "data" => new ContractResource($contract),
-                "message" => "Contract has been updated successfully"
+                "data" => new CashboxResource($cashbox),
+                "message" => "Cashbox has been updated successfully"
             ]);
         }
         return response()->json([
             "success" => false,
-            "data" => new ContractResource($contract),
-            "message" => "Error: Contract has not been updated!"
+            "data" => new CashboxResource($contract),
+            "message" => "Error: Cashbox has not been updated!"
         ]);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy(Cashbox $cashbox)
     {
-        if ($contract->delete()) {
+        if ($cashbox->delete()) {
             return response()->json([
                 "success" => true,
                 "data" => null,
-                "message" => "Contract has been deleted successfully"
+                "message" => "Cashbox has been deleted successfully"
             ]);
         }
         return response()->json([
             "success" => false,
-            "data" => new ContractResource($contract),
-            "message" => "An error occured. Contract could not be deleted"
+            "data" => new CashboxResource($cashbox),
+            "message" => "An error occured. Cashbox could not be deleted"
         ]);
     }
 }

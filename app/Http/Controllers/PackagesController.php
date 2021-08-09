@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateContractRequest;
-use App\Http\Requests\UpdateContractRequest;
-use App\Http\Resources\ContractResource;
-use App\Models\Contract;
+use Illuminate\Http\Request;
+use App\Models\Package;
+use App\Http\Requests\CreatePackageRequest;
+use App\Http\Requests\UpdatePackageRequest;
+use App\Http\Resources\PackageResource;
 
-class ContractsController extends Controller
+class PackagesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +19,7 @@ class ContractsController extends Controller
     {
         return response()->json([
             "success" => true,
-            "data" => ContractResource::collection(Contract::all()),
+            "data" => PackageResource::collection(Package::all()),
         ]);
     }
 
@@ -28,28 +29,28 @@ class ContractsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateContractRequest $request)
+    public function store(CreatePackageRequest $request)
     {
         $data = $request->validated();
-        $contract = Contract::create($data);
+        $contract = Package::create($data);
         return response()->json([
             "success" => true,
-            "data" => new ContractResource($contract),
-            "message" => "User was added successfully"
+            "data" => new PackageResource($contract),
+            "message" => "Package was added successfully"
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Contract $contract)
+    public function show(Package $package)
     {
         return response()->json([
             "success" => true,
-            "data" => new ContractResource($contract),
+            "data" => new PackageResource($package),
         ]);
     }
 
@@ -57,45 +58,46 @@ class ContractsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateContractRequest $request, Contract $contract)
+    public function update(UpdatePackageRequest $request, Package $package)
     {
         $data = $request->validated();
-        if ($contract->update($data)) {
+        if ($package->update($data)) {
             return response()->json([
                 "success" => true,
-                "data" => new ContractResource($contract),
-                "message" => "Contract has been updated successfully"
+                "data" => new PackageResource($package),
+                "message" => "Package has been updated successfully"
             ]);
         }
         return response()->json([
             "success" => false,
-            "data" => new ContractResource($contract),
-            "message" => "Error: Contract has not been updated!"
+            "data" => new PackageResource($package),
+            "message" => "Error: Package has not been updated!"
         ]);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Contract  $contract
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy(Package $package)
     {
-        if ($contract->delete()) {
+        if ($package->delete()) {
             return response()->json([
                 "success" => true,
                 "data" => null,
-                "message" => "Contract has been deleted successfully"
+                "message" => "Package has been deleted successfully"
             ]);
         }
         return response()->json([
             "success" => false,
-            "data" => new ContractResource($contract),
-            "message" => "An error occured. Contract could not be deleted"
+            "data" => new PackageResource($package),
+            "message" => "An error occured. Package could not be deleted"
         ]);
     }
 }

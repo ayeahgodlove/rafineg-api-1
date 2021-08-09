@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class CreateCashboxRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth()->id() ? true : false;
     }
 
     /**
@@ -24,10 +24,9 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|string",
-            "email" => "required|string|unique:users,email",
-            "password" => "required|string|min:6",
-            "phone_number" => "integer|required"
+            "use" => "required|string",
+            "balance" => "required",
+            "last_transaction" => "required|date"
         ];
     }
 }
