@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,10 +13,10 @@ class AuthController extends Controller
     /**
      * Signup new user in the app
      *
-     * @param App\Http\Requests\CreateUserRequest $request
+     * @param App\Http\Requests\UserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function signup(CreateUserRequest $request)
+    public function signup(UserRequest $request)
     {
         // dd('hello singup');
         $data = $request->validated();

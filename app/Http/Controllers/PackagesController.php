@@ -25,24 +25,23 @@ class PackagesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\PackageRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(PackageRequest $request)
     {
         $data = $request->validated();
-        if (Package::create($data)) {
-            return response()->json([
-                "success" => true,
-                "data" => new PackageResource($data),
-                "message" => "New package has been added"
-            ]);
-        }
+        Package::create($data);
         return response()->json([
-            "success" => false,
-            "data" => null,
-            "message" => "Package could not be created."
+            "success" => true,
+            "data" => new PackageResource($data),
+            "message" => "New package has been added"
         ]);
+        // return response()->json([
+        //     "success" => false,
+        //     "data" => null,
+        //     "message" => "Package could not be created."
+        // ]);
     }
 
     /**
@@ -74,8 +73,9 @@ class PackagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PackageRequest $request, Package $package)
+    public function update(PackageRequest $request, $id)
     {
+        $package = Package::find($id);
         if ($package->exits()) {
             $data = $request->validated();
             $package->update($data);
@@ -98,8 +98,9 @@ class PackagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package)
+    public function destroy($id)
     {
+        $package = Package::find($id);
         if ($package->exits()) {
             if ($package->delete()) {
                 return response()->json([

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PackageRequest extends FormRequest
+class CreateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class PackageRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,12 +24,7 @@ class PackageRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => "string",
-            'code' => "string",
-            'description' => "string",
-            'amount' => "number|min:0",
-            'low_investment_limit' => "number|min:0",
-            'high_investment_limit' => "number|min:0"
+            //
         ];
     }
 }
