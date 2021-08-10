@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PackageRequest;
-use App\Http\Resources\PackageResource;
 use App\Models\Package;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreatePackageRequest;
+use App\Http\Requests\UpdatePackageRequest;
+use App\Http\Resources\PackageResource;
 
 class PackagesController extends Controller
 {
@@ -28,20 +30,15 @@ class PackagesController extends Controller
      * @param  \Illuminate\Http\PackageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PackageRequest $request)
+    public function store(CreatePackageRequest $request)
     {
         $data = $request->validated();
-        Package::create($data);
+        $contract = Package::create($data);
         return response()->json([
             "success" => true,
-            "data" => new PackageResource($data),
-            "message" => "New package has been added"
+            "data" => new PackageResource($contract),
+            "message" => "Package was added successfully"
         ]);
-        // return response()->json([
-        //     "success" => false,
-        //     "data" => null,
-        //     "message" => "Package could not be created."
-        // ]);
     }
 
     /**
