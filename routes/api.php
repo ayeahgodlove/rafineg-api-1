@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ContractsController;
-use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PackagesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Http\Controllers\PackagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +26,8 @@ Route::get('test', fn () => response()->json([
     "data" => UserResource::collection(User::all()),
 ]));
 
-Route::apiResource('contracts', ContractsController::class);
-Route::apiResource('packages', PackagesController::class);
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-    // Route::apiResource('contracts', ContractsController::class);
     Route::apiResource('users', UsersController::class);
     Route::apiResource('packages', PackagesController::class);
 });

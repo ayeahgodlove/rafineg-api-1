@@ -13,7 +13,7 @@ class CreatePackageRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth()->id() ? true : false;
+        return true;
     }
 
     /**
@@ -27,9 +27,9 @@ class CreatePackageRequest extends FormRequest
             "name" => "required|string",
             "code" => "required|string",
             "description" => "required|string",
-            "amount" => "decimal|string",
-            "low_investment_limit" => "number|string",
-            "high_investment_limit" => "number|string",
+            "amount" => "decimal",
+            "low_investment_limit" => "number",
+            "high_investment_limit" => "number",
         ];
     }
 }

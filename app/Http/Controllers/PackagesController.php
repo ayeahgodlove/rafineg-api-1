@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PackageRequest;
 use App\Models\Package;
-use Illuminate\Http\Request;
 use App\Http\Requests\CreatePackageRequest;
-use App\Http\Requests\UpdatePackageRequest;
 use App\Http\Resources\PackageResource;
+use Illuminate\Http\Request;
 
 class PackagesController extends Controller
 {
@@ -30,10 +29,19 @@ class PackagesController extends Controller
      * @param  \Illuminate\Http\PackageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreatePackageRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            "name" => "string",
+            "code" => "string",
+            "description" => "string",
+            "amount" => "decimal",
+            "low_investment_limit" => "number|min:0",
+            "high_investment_limit" => "number|min:0",
+        ]);
+
         $contract = Package::create($data);
+
         return response()->json([
             "success" => true,
             "data" => new PackageResource($contract),
