@@ -29,22 +29,20 @@ class PackagesController extends Controller
      * @param  \Illuminate\Http\PackageRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePackageRequest $request)
     {
-        $data = $request->validate([
-            "name" => "string",
-            "code" => "string",
-            "description" => "string",
-            "amount" => "decimal",
-            "low_investment_limit" => "number|min:0",
-            "high_investment_limit" => "number|min:0",
+        $data = $request->validated();
+        return response()->json([
+            "data" => $data,
+            "success" => true
         ]);
 
-        $contract = Package::create($data);
+
+        $package = Package::create($data);
 
         return response()->json([
             "success" => true,
-            "data" => new PackageResource($contract),
+            "data" => new PackageResource($package),
             "message" => "Package was added successfully"
         ]);
     }

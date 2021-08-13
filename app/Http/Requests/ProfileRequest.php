@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class CreatePackageRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class CreatePackageRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::id() ? true : false;
     }
 
     /**
@@ -24,12 +25,11 @@ class CreatePackageRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "string",
-            "code" => "string",
-            "description" => "string",
-            "amount" => "decimal",
-            "low_investment_limit" => "number",
-            "high_investment_limit" => "number",
+            "bio" => "string|nullable",
+            "address" => "string|nullable",
+            "gender" => "string|nullable",
+            "date_of_birth" => "date|nullable",
+            "image" => "string|nullable|max:1000",
         ];
     }
 }
