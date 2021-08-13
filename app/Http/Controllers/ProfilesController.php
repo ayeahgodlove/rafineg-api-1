@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Auth;
 
 class ProfilesController extends Controller
 {
@@ -30,7 +31,9 @@ class ProfilesController extends Controller
     public function store(ProfileRequest $request)
     {
         $data = $request->validated();
+
         Profile::create($data);
+
         return response()->json([
             "success"   => true,
             "data"      => new ProfileResource($data),
@@ -48,7 +51,7 @@ class ProfilesController extends Controller
     {
         return response()->json([
             "success"   => true,
-            "data"      => new ProfileResource($profile),
+            "data"      => new ProfileResource($profile)
         ]);
     }
 

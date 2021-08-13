@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Schema;
 
 class CreateProfilesTable extends Migration
@@ -16,11 +17,11 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->text('bio');
-            $table->string('address', 50);
+            $table->text('bio')->default("");
+            $table->string('address', 50)->default("");
             $table->enum('gender', ["male", "female"]);
-            $table->date('date_of_birth');
-            $table->string('image');
+            $table->date('date_of_birth')->default(Date::now());
+            $table->string('image')->default("");
             $table->timestamps();
         });
     }

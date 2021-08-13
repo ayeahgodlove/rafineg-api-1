@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PackagesController;
+use App\Http\Controllers\ProfilesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::apiResource('users', UsersController::class);
     Route::apiResource('packages', PackagesController::class);
+    Route::apiResource('profiles', ProfilesController::class);
 });
 
 Route::fallback(function () {
