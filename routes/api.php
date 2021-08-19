@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfilesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Http\Controllers\TestsMomoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,6 @@ Route::fallback(function () {
         "message" => 'Page Not Found. If error persists, contact info@website.com'
     ], 404);
 });
+
+//momo endpoints
+Route::get('/', [TestsMomoController::class, 'confirmOrder']);

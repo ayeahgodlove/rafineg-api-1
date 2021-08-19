@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a3fc7e6ae250e7135da3e043941710c",
+    "content-hash": "4c1f86e796d4840b0e93036ac99beddc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1411,6 +1411,97 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "malico/laravel-mesomb",
+            "version": "1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yondifon/laravel-mesomb.git",
+                "reference": "06d63ba636df520d49f8c3633e81cb7f0b366b72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yondifon/laravel-mesomb/zipball/06d63ba636df520d49f8c3633e81cb7f0b366b72",
+                "reference": "06d63ba636df520d49f8c3633e81cb7f0b366b72",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.5|^7.0|^8.0",
+                "illuminate/database": "~5.7|^6.0|^7.0|^8.0",
+                "illuminate/support": "~5.7|^6.0|^7.0|^8.0",
+                "malico/mobile-cm-php": "^1.2",
+                "php": "^7.2.5|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Malico\\MeSomb\\MeSombServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Malico\\MeSomb\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malico",
+                    "email": "hi@malico.me"
+                }
+            ],
+            "description": "A laravel wrapper on top of Mesomb Payment API",
+            "support": {
+                "issues": "https://github.com/yondifon/laravel-mesomb/issues",
+                "source": "https://github.com/yondifon/laravel-mesomb/tree/1.2.4"
+            },
+            "time": "2021-02-10T18:51:40+00:00"
+        },
+        {
+            "name": "malico/mobile-cm-php",
+            "version": "1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yondifon/mobile-cm-php.git",
+                "reference": "e174bcdf95a67797dba3fd9fd28c5cc4f417a44f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yondifon/mobile-cm-php/zipball/e174bcdf95a67797dba3fd9fd28c5cc4f417a44f",
+                "reference": "e174bcdf95a67797dba3fd9fd28c5cc4f417a44f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "pestphp/pest": "1.x-dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Malico\\MobileCM\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malico",
+                    "email": "hi@malico.me"
+                }
+            ],
+            "description": "Get Telephone number's Mobile Network",
+            "support": {
+                "issues": "https://github.com/yondifon/mobile-cm-php/issues",
+                "source": "https://github.com/yondifon/mobile-cm-php/tree/1.3"
+            },
+            "time": "2021-07-22T09:56:17+00:00"
         },
         {
             "name": "monolog/monolog",
