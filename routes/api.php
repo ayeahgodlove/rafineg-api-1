@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\ProfilesController;
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UsersController::class);
     Route::apiResource('packages', PackagesController::class);
     Route::apiResource('profiles', ProfilesController::class);
+    Route::apiResource('contracts', ContractsController::class);
 });
 
 Route::fallback(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,6 @@ class AuthController extends Controller
      */
     public function signup(UserRequest $request)
     {
-        // dd('hello singup');
         $data = $request->validated();
         $data['password'] =  Hash::make($data['password']);
         if (User::create($data)) {
@@ -55,7 +55,8 @@ class AuthController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Login successful",
-            "accessToken" => $user->createToken('user token')->plainTextToken
+            "accessToken" => $user->createToken('user token')->plainTextToken,
+            "data" => new UserResource($user)
         ]);
     }
 

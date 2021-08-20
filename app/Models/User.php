@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Profile;
 use App\Models\Contract;
 use App\Models\Cashbox;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
@@ -42,7 +43,7 @@ class User extends Authenticatable
 
     public function profile()
     {
-        return $this->hasOne(Profile::class); 
+        return $this->hasOne(Profile::class);
     }
 
     public function contract()
@@ -53,5 +54,10 @@ class User extends Authenticatable
     public function cashbox()
     {
         return $this->hasOne(Cashbox::class);
+    }
+
+    public function referal()
+    {
+        return $this->hasOne(Referal::class);
     }
 }
