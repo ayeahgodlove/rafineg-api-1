@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateCashboxRequest;
 use App\Http\Requests\UpdateCashboxRequest;
 use App\Http\Resources\CashboxResource;
+use App\Models\Cashbox;
 
-class CashboxesController extends Controller 
+class CashboxesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -72,10 +73,9 @@ class CashboxesController extends Controller
         }
         return response()->json([
             "success" => false,
-            "data" => new CashboxResource($contract),
+            "data" => new CashboxResource($cashbox),
             "message" => "Error: Cashbox has not been updated!"
         ]);
-
     }
 
     /**

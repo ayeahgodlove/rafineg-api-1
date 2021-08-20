@@ -5,6 +5,8 @@ use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\ReferalController;
+use App\Http\Controllers\TransactionsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -34,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('packages', PackagesController::class);
     Route::apiResource('profiles', ProfilesController::class);
     Route::apiResource('contracts', ContractsController::class);
+    Route::apiResource('referals', ReferalController::class);
+    Route::apiResource('transactions', TransactionsController::class);
 });
 
 Route::fallback(function () {

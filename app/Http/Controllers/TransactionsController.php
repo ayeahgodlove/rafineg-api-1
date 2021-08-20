@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
@@ -20,7 +19,7 @@ class TransactionsController extends Controller
         return response()->json([
             "success" => true,
             "data" => TransactionResource::collection(Transaction::all()),
-        ]);   
+        ]);
     }
 
     /**
