@@ -58,7 +58,7 @@ return [
 
     /**
      * Failed Payments
-     *
+     * 
      * @var array
      */
     'failed_payments' => [
