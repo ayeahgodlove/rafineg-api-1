@@ -14,7 +14,7 @@ class ProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::id() ? true : false;
+        return true;
     }
 
     /**

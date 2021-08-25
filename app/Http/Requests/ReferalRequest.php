@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class CreateTransactionRequest extends FormRequest
+class ReferalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class CreateTransactionRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth()->id() ? true : false;
+        return true;
     }
 
     /**
@@ -24,10 +25,9 @@ class CreateTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            "user_id" => "required",
-            "code" => "required|string",
-            "amount" => "required|integer",
-            "description" => "required|string"
+            "code" => "string|required",
+            "link" => "string|required",
+            "user_id" => Auth::id()
         ];
     }
 }

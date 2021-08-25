@@ -35,7 +35,7 @@ class ContractsController extends Controller
         return response()->json([
             "success" => true,
             "data" => new ContractResource($contract),
-            "message" => "User was added successfully"
+            "message" => "Contract was added successfully"
         ]);
     }
 

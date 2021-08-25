@@ -24,9 +24,9 @@ class CreateCashboxRequest extends FormRequest
     public function rules()
     {
         return [
-            "use" => "required|string",
-            "balance" => "required",
-            "last_transaction" => "required|date"
+            "user_id" => "required",
+            "balance" => "required|integer|min:0",
+            "transaction_id" => "required"
         ];
     }
 }

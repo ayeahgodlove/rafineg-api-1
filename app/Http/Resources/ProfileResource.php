@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileResource extends JsonResource
@@ -16,7 +17,7 @@ class ProfileResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "user" => new UserResource($this->user),
+            "user" => new UserResource(User::find($this->user_id)),
             "bio" => $this->bio,
             "address" => $this->address,
             "gender" => $this->gender,
