@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use PhpParser\Node\Stmt\Enum_;
 
 class CreateTransactionsTable extends Migration
 {
@@ -19,6 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->string('code');
             $table->string('description');
             $table->string('amount');
+            $table->string('method');
             $table->timestamps();
         });
     }

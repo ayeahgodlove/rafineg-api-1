@@ -230,4 +230,10 @@ return [
 
     ],
 
+    "transaction_methods" => [
+        "momo" => "momo",
+        "stript" => "strip",
+        "paypal" => "paypal"
+    ],
+
 ];

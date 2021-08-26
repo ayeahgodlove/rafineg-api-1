@@ -30,7 +30,9 @@ class TransactionsController extends Controller
      */
     public function store(CreateTransactionRequest $request)
     {
+
         $data = $request->validated();
+        // if($data['method'] == Config::get('trans', 'default');)
         $transaction = Transaction::create($data);
         return response()->json([
             "success" => true,
