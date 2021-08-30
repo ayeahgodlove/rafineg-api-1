@@ -229,5 +229,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+    'transaction_method' => [
+        'momo' => 'MOMO',
+        'stripe' => 'STRIPE',
+    ]
 
 ];

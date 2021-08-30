@@ -30,7 +30,21 @@ class TransactionsController extends Controller
      */
     public function store(CreateTransactionRequest $request)
     {
+        //select transaction method
+        //momo, stripe(card payment).
+        
         $data = $request->validated();
+        //check transaction method type
+        //validate the chosen transaction method
+        /**
+         * Store a newly created resource in storage.
+         * if($data->method == 'momo') {
+         *  //perform momo transaction
+         * }
+         * else {
+         *  //perform stripe payment
+         * }
+         */
         $transaction = Transaction::create($data);
         return response()->json([
             "success" => true,

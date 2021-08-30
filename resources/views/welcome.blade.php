@@ -14,7 +14,10 @@
 
 <body class="antialiased">
     <div>
-        <h1 style="text-align: center;">RAFINEG API</h1>
+        <h1 style="text-align: center;">RAFINEG API
+            {{ dd(Config::get('transaction_method', 'momo')) }}
+
+        </h1>
     </div>
 </body>
 
