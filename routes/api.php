@@ -25,6 +25,8 @@ use App\Http\Controllers\TestsMomoController;
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']);
+Route::post('verify/${method}', [AuthController::class, 'verify_client']);
+Route::get('verification-code/${method}', [AuthController::class, 'send_verification_code']);
 
 Route::get('test', fn () => response()->json([
     "success" => true,
