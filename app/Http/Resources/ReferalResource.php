@@ -16,6 +16,7 @@ class ReferalResource extends JsonResource
     public function toArray($request)
     {
         return [
+            "id" => $this->id,
             "code" => $this->code,
             "link" => $this->link,
             "user" => new UserResource(User::find($this->user_id))

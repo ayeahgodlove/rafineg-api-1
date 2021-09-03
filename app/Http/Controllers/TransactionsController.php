@@ -6,6 +6,7 @@ use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
+use Malico\MeSomb\Payment;
 
 class TransactionsController extends Controller
 {
@@ -30,21 +31,32 @@ class TransactionsController extends Controller
      */
     public function store(CreateTransactionRequest $request)
     {
+        $method =  [
+                    'momo' => 'MOMO',
+                    'stripe' => 'STRIPE',
+                ];
         //select transaction method
         //momo, stripe(card payment).
-        
+
         $data = $request->validated();
-        //check transaction method type
-        //validate the chosen transaction method
-        /**
-         * Store a newly created resource in storage.
-         * if($data->method == 'momo') {
-         *  //perform momo transaction
-         * }
-         * else {
-         *  //perform stripe payment
-         * }
-         */
+        // if($data->method == $method['momo']) {
+        //     $request = new Payment('237672374414', $data->amount);
+
+        //     $payment = $request->pay();
+
+        //     if($payment->success){
+        //         echo("Successfull payment");
+        //     } else {
+        //         // fire some event, redirect to error page
+        //         echo("some unexpected occured");
+        //     }
+    
+        //     // get Transactions details $payment->transactions
+        // }
+        // else {
+        //     //error
+        // }
+      
         $transaction = Transaction::create($data);
         return response()->json([
             "success" => true,

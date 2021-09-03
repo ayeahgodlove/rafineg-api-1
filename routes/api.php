@@ -38,9 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('profiles', ProfilesController::class);
     Route::apiResource('contracts', ContractsController::class);
     Route::apiResource('referals', ReferalController::class);
-    Route::apiResource('transactions', TransactionsController::class);
 });
-
+Route::apiResource('transactions', TransactionsController::class);
 Route::fallback(function () {
     return response()->json([
         "success" => false,

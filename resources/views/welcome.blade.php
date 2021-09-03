@@ -15,7 +15,14 @@
 <body class="antialiased">
     <div>
         <h1 style="text-align: center;">RAFINEG API
-            {{ dd(Config::get('transaction_method', 'momo')) }}
+            <?php
+            
+            $method = [
+                'momo' => 'MOMO',
+                'stripe' => 'STRIPE',
+            ];
+            ?>
+            {{ dd($method['momo']) }}
 
         </h1>
     </div>
