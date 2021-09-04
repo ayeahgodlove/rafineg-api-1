@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email', 50);
             $table->integer('phone_number');
             $table->string('password');
-            $table->string('firstname', 20);
-            $table->string('lastname', 20);
+            $table->string('firstname', 20)->nullable();
+            $table->string('lastname', 20)->nullable();
             // $table->boolean('registration_fee_paid')->default(false);
             // $table->string('gender', enum(["male", "female"]))->default("male");
             $table->boolean('isVerified')->default(false)->comment('false: user not verified, true: user verified');

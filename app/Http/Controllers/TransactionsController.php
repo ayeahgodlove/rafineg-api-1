@@ -39,24 +39,7 @@ class TransactionsController extends Controller
         //momo, stripe(card payment).
 
         $data = $request->validated();
-        // if($data->method == $method['momo']) {
-        //     $request = new Payment('237672374414', $data->amount);
-
-        //     $payment = $request->pay();
-
-        //     if($payment->success){
-        //         echo("Successfull payment");
-        //     } else {
-        //         // fire some event, redirect to error page
-        //         echo("some unexpected occured");
-        //     }
-    
-        //     // get Transactions details $payment->transactions
-        // }
-        // else {
-        //     //error
-        // }
-      
+        
         $transaction = Transaction::create($data);
         return response()->json([
             "success" => true,
