@@ -8,6 +8,8 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Malico\MeSomb\Payment;
+use Malico\MeSomb\Deposit;
 
 class AuthController extends Controller
 {
@@ -19,8 +21,21 @@ class AuthController extends Controller
      */
     public function signup(UserRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->validated(); 
         $data['password'] =  Hash::make($data['password']);
+        //registration fee transaction
+        $request = new Deposit("".$data->phone_number."", 100);
+
+        $payment = $request->pay();
+
+        if($payment->success){
+            // Fire some event, send payout email
+            $data['registration_fee_paid'] = true;
+        } else {
+            // fire some event, redirect to error page
+        }
+
+        // get Transactions details $payment->transactions
         if (User::create($data)) {
             return response()->json([
                 "status" => true,

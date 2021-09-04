@@ -6,7 +6,7 @@ use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
-use Malico\MeSomb\Payment;
+use Malico\MeSomb\Deposit;
 
 class TransactionsController extends Controller
 {
