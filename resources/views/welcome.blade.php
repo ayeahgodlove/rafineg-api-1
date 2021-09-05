@@ -22,7 +22,7 @@
                 'stripe' => 'STRIPE',
             ];
             ?>
-            {{ dd($method['momo']) }}
+            {{ dd(auth()->user()) }}
 
         </h1>
     </div>

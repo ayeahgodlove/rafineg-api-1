@@ -24,9 +24,7 @@ class CreateRegistrationFeeRequest extends FormRequest
     public function rules()
     {
         return [
-            "username" => "required|string",
-            "phone_number" => "integer|required|unique:users,phone_number",
-            "amount" => "required|string",
+            "phone_number" => "integer|required",
             "transaction_method" => "required|string"
         ];
     }

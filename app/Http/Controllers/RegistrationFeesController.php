@@ -8,6 +8,7 @@ use App\Http\Requests\CreateRegistrationFeeRequest;
 use App\Models\RegistrationFee;
 use Malico\MeSomb\Payment;
 use Malico\MeSomb\Deposit;
+
 class RegistrationFeesController extends Controller
 {
     /**
@@ -21,7 +22,7 @@ class RegistrationFeesController extends Controller
             "success" => true,
             "data" => RegistrationFeeResource::collection(RegistrationFee::all()),
         ]);
-    }
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -33,13 +34,17 @@ class RegistrationFeesController extends Controller
     {
         $data = $request->validated();
         //registration fee transaction
-        $transaction = new Deposit("237$data->phone_number", 100);
+        $data['username'] = auth()->user()->name;
+        $data['amount'] = "5000";
+        $tel = $data['phone_number'];
+        $transaction = new Payment("$tel", 30);
 
         $deposit = $transaction->pay();
 
         if($deposit->success){
             // Fire some event, send payout email
             $registrationFee = RegistrationFee::create($data);
+
         } 
 
         // get Transactions details $payment->transactions
