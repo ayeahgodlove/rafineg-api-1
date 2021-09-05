@@ -47,7 +47,7 @@ class RegistrationFeesController extends Controller
 
         } 
 
-        // get Transactions details $payment->transactions
+        // $payment->transactions();
 
         return response()->json([
             "data" => new RegistrationFeeResource(($registrationFee)),
