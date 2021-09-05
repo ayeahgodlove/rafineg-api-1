@@ -10,6 +10,8 @@ use App\Http\Controllers\TransactionsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Http\Controllers\TestsMomoController;
+use App\Http\Controllers\RegistrationFeesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,12 +39,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('profiles', ProfilesController::class);
     Route::apiResource('contracts', ContractsController::class);
     Route::apiResource('referals', ReferalController::class);
-    Route::apiResource('transactions', TransactionsController::class);
+    Route::apiResource('registration', RegistrationFeesController::class);
 });
-
 Route::fallback(function () {
     return response()->json([
         "success" => false,
         "message" => 'Page Not Found. If error persists, contact info@website.com'
     ], 404);
 });
+
+//momo endpoints
+Route::get('/', [TestsMomoController::class, 'confirmOrder']);
