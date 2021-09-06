@@ -229,11 +229,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
-    "transaction_methods" => [
-        "momo" => "momo",
-        "stript" => "strip",
-        "paypal" => "paypal"
-    ],
+    'transaction_method' => [
+        'momo' => 'MOMO',
+        'stripe' => 'STRIPE',
+    ]
 
 ];

@@ -14,7 +14,17 @@
 
 <body class="antialiased">
     <div>
-        <h1 style="text-align: center;">RAFINEG API</h1>
+        <h1 style="text-align: center;">RAFINEG API
+            <?php
+            
+            $method = [
+                'momo' => 'MOMO',
+                'stripe' => 'STRIPE',
+            ];
+            ?>
+            {{ dd(auth()->user()) }}
+
+        </h1>
     </div>
 </body>
 
