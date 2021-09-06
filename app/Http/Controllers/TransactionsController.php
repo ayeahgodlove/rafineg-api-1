@@ -6,6 +6,7 @@ use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
+use Malico\MeSomb\Deposit;
 
 class TransactionsController extends Controller
 {
@@ -30,7 +31,15 @@ class TransactionsController extends Controller
      */
     public function store(CreateTransactionRequest $request)
     {
+        $method =  [
+                    'momo' => 'MOMO',
+                    'stripe' => 'STRIPE',
+                ];
+        //select transaction method
+        //momo, stripe(card payment).
+
         $data = $request->validated();
+        
         $transaction = Transaction::create($data);
         return response()->json([
             "success" => true,

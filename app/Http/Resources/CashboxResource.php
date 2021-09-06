@@ -16,6 +16,7 @@ class CashboxResource extends JsonResource
     public function toArray($request)
     {
         return [
+            "id" => $this->id,
             "balance" => $this->balance,
             "user" => new UserResource($this->casbox_user()),
             "lastTransaction" => new TransactionResource(

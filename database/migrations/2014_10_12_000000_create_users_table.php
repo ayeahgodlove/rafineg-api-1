@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use PhpParser\Node\Stmt\Enum_;
 
 class CreateUsersTable extends Migration
 {
@@ -19,8 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('email', 50);
             $table->integer('phone_number');
             $table->string('password');
-            $table->string('firstname', 20);
-            $table->string('lastname', 20);
+            $table->string('firstname', 20)->nullable();
+            $table->string('lastname', 20)->nullable();
+            $table->boolean('is_registered')->default(false);
+            // $table->string('gender', enum(["male", "female"]))->default("male");
             $table->boolean('isVerified')->default(false)->comment('false: user not verified, true: user verified');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

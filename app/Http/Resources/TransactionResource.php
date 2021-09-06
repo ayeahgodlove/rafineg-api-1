@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionResource extends JsonResource
@@ -14,6 +16,11 @@ class TransactionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "balance" => $this->balance,
+            "user" => new UserResource(User::find($this->user_id)),
+            "lastTransaction" => new TransactionResource(Transaction::find($this->transaction_id))
+        ];
     }
 }
