@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('firstname', 20)->nullable();
             $table->string('lastname', 20)->nullable();
-            // $table->boolean('registration_fee_paid')->default(false);
+            $table->boolean('is_registered')->default(false);
             // $table->string('gender', enum(["male", "female"]))->default("male");
             $table->boolean('isVerified')->default(false)->comment('false: user not verified, true: user verified');
             $table->timestamp('email_verified_at')->nullable();
