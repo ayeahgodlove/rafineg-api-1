@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Malico\MeSomb\Payment;
 
 class TestsMomoController extends Controller
@@ -15,11 +14,11 @@ class TestsMomoController extends Controller
 
         dd($payment);
 
-        if($payment->success){
-            echo("Successfull payment");
+        if ($payment->success) {
+            echo ("Successfull payment");
         } else {
             // fire some event, redirect to error page
-            echo("some unexpected occured");
+            echo ("some unexpected occured");
         }
 
         // get Transactions details $payment->transactions

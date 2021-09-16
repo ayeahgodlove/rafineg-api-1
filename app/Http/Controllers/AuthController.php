@@ -6,6 +6,7 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Faker\Provider\bg_BG\PhoneNumber;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
@@ -58,6 +59,31 @@ class AuthController extends Controller
             "accessToken" => $user->createToken('user token')->plainTextToken,
             "data" => new UserResource($user)
         ]);
+    }
+
+    public function forgot_password(string $email)
+    {
+        if (User::where('email', $email)->first()) {
+            // Send email with confirmation code
+
+            // send response with confirmation code to be
+            // saved on the state.
+        }
+    }
+
+    /**
+     * Handle phone and client email verifications
+     * @param method
+     */
+    public function verify_client(string $method)
+    {
+        if ($method == 'email') {
+            // handle email verification
+        } else if ($method == 'phone') {
+            // handle phone number verification
+        } else {
+            // throw verification error
+        }
     }
 
     public function logout()
