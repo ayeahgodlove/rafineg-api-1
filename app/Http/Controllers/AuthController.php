@@ -22,7 +22,6 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $data['password'] =  Hash::make($data['password']);
-
         if (User::create($data)) {
             return response()->json([
                 "success" => true,
