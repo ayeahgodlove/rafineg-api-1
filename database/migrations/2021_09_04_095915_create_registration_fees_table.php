@@ -16,6 +16,7 @@ class CreateRegistrationFeesTable extends Migration
         Schema::create('registration_fees', function (Blueprint $table) {
             $table->id();
             $table->string('username');
+            $table->string('user_id');
             $table->integer('phone_number');
             $table->string('amount');
             $table->string('transaction_method')->nullable();
