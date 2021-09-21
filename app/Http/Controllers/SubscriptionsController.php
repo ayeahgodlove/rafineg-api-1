@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Package;
 
 class SubscriptionsController extends Controller
 {
-    //
+    public function subscribe($package_id)
+    {
+        $package = Package::find($package_id);
+        if($package)
+        {
+            jj
+        }
+    }
 }
