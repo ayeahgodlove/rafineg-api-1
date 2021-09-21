@@ -17,12 +17,12 @@ class CreateRegistrationFeesTable extends Migration
             $table->id();
             $table->string('username');
             $table->string('user_id');
-            $table->integer('phone_number');
+            $table->string('phone_number', 15);
             $table->string('amount');
             $table->string('transaction_method')->nullable();
             $table->timestamps();
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
