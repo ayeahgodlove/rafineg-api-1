@@ -9,6 +9,7 @@ use App\Models\User;
 use Faker\Provider\bg_BG\PhoneNumber;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 class AuthController extends Controller
 {
     /**
@@ -19,18 +20,19 @@ class AuthController extends Controller
      */
     public function signup(UserRequest $request)
     {
-        $data = $request->validated(); 
+        $data = $request->validated();
         $data['password'] =  Hash::make($data['password']);
-        
         if (User::create($data)) {
             return response()->json([
-                "status" => true,
-                "message" => "You account has been successfully created"
+                "success" => true,
+                "message" => "You account has been successfully created",
+                "data" => []
             ]);
         } else {
             return response()->json([
-                "status" => false,
-                "message" => "An error occured. Try again later"
+                "success" => false,
+                "message" => "An error occured. Try again later",
+                "data" => []
             ]);
         }
     }
