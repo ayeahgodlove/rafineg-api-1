@@ -18,6 +18,7 @@ class CreatePackageTable extends Migration
             $table->string('name', 120);
             $table->string('code', 10);
             $table->text('description');
+            $table->string('image');
             $table->decimal('amount');
             $table->integer('low_investment_limit');
             $table->integer('high_investment_limit');
