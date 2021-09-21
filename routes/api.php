@@ -43,6 +43,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('contracts', ContractsController::class);
     Route::apiResource('referals', ReferalController::class);
     Route::apiResource('registration', RegistrationFeesController::class);
+    Route::post('subscribe/{id}', [SubscriptionController::class, 'subscribe']);
+    Route::post('unsubscribe/{id}', [SubscriptionController::class, 'unsubscribe']);
 });
 Route::fallback(function () {
     return response()->json([
