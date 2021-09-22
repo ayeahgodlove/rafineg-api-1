@@ -9,9 +9,10 @@ class SubscriptionsController extends Controller
     public function subscribe($package_id)
     {
         $package = Package::find($package_id);
-        if($package)
-        {
-            jj
-        }
+        // if($package)
+        // {
+        //     //
+        //     return true;
+        // }
     }
 }

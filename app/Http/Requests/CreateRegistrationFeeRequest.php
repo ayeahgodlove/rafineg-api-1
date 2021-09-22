@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class CreateRegistrationFeeRequest extends FormRequest
 {
@@ -27,5 +29,17 @@ class CreateRegistrationFeeRequest extends FormRequest
             "phone_number" => "integer|required",
             "transaction_method" => "required|string"
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(
+            [
+                "success" => false,
+                "errors" => $validator->errors(),
+                "data" => [],
+            ],
+            422
+        ));
     }
 }
