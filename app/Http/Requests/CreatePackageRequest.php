@@ -26,6 +26,7 @@ class CreatePackageRequest extends FormRequest
         return [
             "name" => "string",
             "code" => "string",
+            "image" => "string",
             "description" => "string",
             "amount" => "decimal",
             "low_investment_limit" => "number",

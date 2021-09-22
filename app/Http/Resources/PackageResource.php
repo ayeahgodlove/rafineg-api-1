@@ -19,6 +19,7 @@ class PackageResource extends JsonResource
             "name" => $this->name,
             "code" => $this->code,
             "description" => $this->description,
+            "image" => asset($this->image),
             "amount" => $this->amount,
             "lowInvestmentLimit" => $this->low_investment_limit,
             "highInvestmentLimit" => $this->high_investment_limit,

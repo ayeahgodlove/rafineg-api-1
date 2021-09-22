@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Resources\RegistrationFeeResource;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\CreateRegistrationFeeRequest;
 use App\Models\RegistrationFee;
 use App\Models\User;
 use Malico\MeSomb\Payment;
-use Malico\MeSomb\Deposit;
 
 class RegistrationFeesController extends Controller
 {
@@ -24,7 +22,7 @@ class RegistrationFeesController extends Controller
             "success" => true,
             "data" => RegistrationFeeResource::collection(RegistrationFee::all()),
         ]);
-    } 
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,12 +42,13 @@ class RegistrationFeesController extends Controller
 
         $deposit = $transaction->pay();
         $currentUser = User::find(auth()->user()->id);
-        if($deposit->success){
+
+        if ($deposit->success) {
             // Fire some event, send payout email
             $registrationFee = RegistrationFee::create($data);
             $currentUser['is_registered'] = true;
             $currentUser->save();
-        } 
+        }
 
         // $payment->transactions();
 
