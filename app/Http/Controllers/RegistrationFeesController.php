@@ -43,6 +43,7 @@ class RegistrationFeesController extends Controller
         $deposit = $transaction->pay();
         $currentUser = User::find(auth()->user()->id);
 
+        $registrationFee = null;
         if ($deposit->success) {
             // Fire some event, send payout email
             $registrationFee = RegistrationFee::create($data);
