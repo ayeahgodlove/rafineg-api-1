@@ -35,7 +35,7 @@ class RegistrationFeesController extends Controller
         $data = $request->validated();
         //registration fee transaction
         $data['username'] = auth()->user()->name;
-        $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = auth()->user()->id;  
         $data['amount'] = "5000";
         $tel = $data['phone_number'];
         $transaction = new Payment("$tel", 30);
@@ -43,6 +43,7 @@ class RegistrationFeesController extends Controller
         $deposit = $transaction->pay();
         $currentUser = User::find(auth()->user()->id);
 
+        $registrationFee = null;
         if ($deposit->success) {
             // Fire some event, send payout email
             $registrationFee = RegistrationFee::create($data);
