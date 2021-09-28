@@ -17,10 +17,11 @@ class RegistrationFeeResource extends JsonResource
         return [
             "id" => $this->id,
             "username" => $this->username,
+            "userId" => $this->user_id,
             "phoneNumber" => $this->phone_number,
             "amount" => $this->amount,
             "transactionMethod" => $this->transaction_method,
-            "createdOn" => $this->created_on,
+            "createdOn" => $this->created_on, 
             "updatedOn" => $this->updated_on,
         ];
     }

@@ -22,7 +22,7 @@
                 'stripe' => 'STRIPE',
             ];
             ?>
-            {{ dd(auth()->user()) }}
+            {{ dd(auth()) }}
 
         </h1>
     </div>
