@@ -31,6 +31,14 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
         $data = $request->validated();
+        if (str_contains($data['name'], " ")) {
+            $names = explode(' ', $data['name']);
+            $data["firstname"] = $names[0];
+            $data["lastname"] = $names[1];
+        } else {
+            $data['firstname'] = $data['name'];
+        }
+
         $user = User::create($data);
         return response()->json([
             "success" => true,
