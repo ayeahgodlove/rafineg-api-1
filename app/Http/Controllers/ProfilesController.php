@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Storage;
 
 class ProfilesController extends Controller
 {
@@ -30,6 +31,12 @@ class ProfilesController extends Controller
     public function store(ProfileRequest $request)
     {
         $data = $request->validated();
+
+        if (request()->hasFile('image')) {
+            $path = request()->file('image')->move('images');
+            $data['image'] = asset($path);
+        }
+
         $profile = Profile::create($data);
 
         return response()->json([
@@ -69,6 +76,11 @@ class ProfilesController extends Controller
     public function update(ProfileRequest $request, Profile $profile)
     {
         $data = $request->validated();
+        if (request()->hasFile('image')) {
+            Storage::delete($profile->image);
+            $path = request()->file('image')->move('images');
+            $data['image'] = asset($path);
+        }
         $profile = $profile->update($data);
         return response()->json([
             "success"   => true,
