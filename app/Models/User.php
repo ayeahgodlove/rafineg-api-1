@@ -58,6 +58,11 @@ class User extends Authenticatable
 
     public function referal()
     {
-        return $this->hasOne(Referal::class);
+        return $this->hasMany(Referal::class);
+    }
+
+    public function package()
+    {
+        return $this->belongsToMany(Package::class);
     }
 }

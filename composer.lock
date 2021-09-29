@@ -1617,16 +1617,16 @@
         },
         {
             "name": "malico/mobile-cm-php",
-            "version": "1.3",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yondifon/mobile-cm-php.git",
-                "reference": "e174bcdf95a67797dba3fd9fd28c5cc4f417a44f"
+                "reference": "bbc63606f0ab02ed687e94d429c17e8968487737"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yondifon/mobile-cm-php/zipball/e174bcdf95a67797dba3fd9fd28c5cc4f417a44f",
-                "reference": "e174bcdf95a67797dba3fd9fd28c5cc4f417a44f",
+                "url": "https://api.github.com/repos/yondifon/mobile-cm-php/zipball/bbc63606f0ab02ed687e94d429c17e8968487737",
+                "reference": "bbc63606f0ab02ed687e94d429c17e8968487737",
                 "shasum": ""
             },
             "require-dev": {
@@ -1651,9 +1651,9 @@
             "description": "Get Telephone number's Mobile Network",
             "support": {
                 "issues": "https://github.com/yondifon/mobile-cm-php/issues",
-                "source": "https://github.com/yondifon/mobile-cm-php/tree/1.3"
+                "source": "https://github.com/yondifon/mobile-cm-php/tree/1.3.1"
             },
-            "time": "2021-07-22T09:56:17+00:00"
+            "time": "2021-09-07T11:43:10+00:00"
         },
         {
             "name": "moneyphp/money",

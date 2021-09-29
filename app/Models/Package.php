@@ -11,4 +11,9 @@ class Package extends Model
 
 
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

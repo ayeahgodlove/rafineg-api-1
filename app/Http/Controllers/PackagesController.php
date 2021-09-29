@@ -95,7 +95,7 @@ class PackagesController extends Controller
         return response()->json([
             "success" => false,
             "data" => null,
-            "message" => "Package could not be updated"
+            "message" => "Package does not exist on the server"
         ]);
     }
 
