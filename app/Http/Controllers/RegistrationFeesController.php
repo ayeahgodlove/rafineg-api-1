@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Http\Requests\CreateRegistrationFeeRequest;
 use App\Models\RegistrationFee;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Malico\MeSomb\Payment;
 
 class RegistrationFeesController extends Controller
@@ -32,10 +33,13 @@ class RegistrationFeesController extends Controller
      */
     public function store(CreateRegistrationFeeRequest $request)
     {
+        Log::debug("registration request " . $request);
+
+
         $data = $request->validated();
         //registration fee transaction
         $data['username'] = auth()->user()->name;
-        $data['user_id'] = auth()->user()->id;  
+        $data['user_id'] = auth()->user()->id;
         $data['amount'] = "5000";
         $tel = $data['phone_number'];
         $transaction = new Payment("$tel", 30);
@@ -49,25 +53,22 @@ class RegistrationFeesController extends Controller
             $registrationFee = RegistrationFee::create($data);
             $currentUser['is_registered'] = true;
             $currentUser->save();
+
+            return response()->json([
+                "data" => [
+                    "registrationFee" => new RegistrationFeeResource($registrationFee),
+                    "user" => new UserResource($currentUser),
+                ],
+                "success" => true
+            ]);
         }
 
         // $payment->transactions();
 
         return response()->json([
-            "data" => [
-                "registrationFee" => new RegistrationFeeResource(($registrationFee)),
-                "user" => new UserResource($currentUser),
-            ],
-            "success" => true
-        ]);
-
-
-        $package = RegistrationFee::create($data);
-
-        return response()->json([
-            "success" => true,
-            "data" => new RegistrationFeeResource($package),
-            "message" => "RegistrationFee was added successfully"
+            "success" => false,
+            "message" => "payment failed",
+            "data" => [],
         ]);
     }
 
