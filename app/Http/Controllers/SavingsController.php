@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\SavingResource;
 use App\Models\Saving;
 use  App\Http\Requests\CreateSavingRequest;
+use Malico\MeSomb\Payment;
 
 
 class SavingsController extends Controller
@@ -34,12 +35,30 @@ class SavingsController extends Controller
         $data = $request->validated();
         $user = auth()->user()->id;
         $data['user'] = "$user";
-        $saving = Saving::create($data);
-        return response()->json([
-            "success" => true,
-            "data" => new SavingResource($saving),
-            "message" => "Saving was added successfully"
-        ]);
+        $tel = $data['telephone'];
+
+        $transaction = new Payment("$tel", 30);
+
+        $payment = $transaction->pay();
+
+        if($payment->success) {
+            //fire some event
+            $saving = Saving::create($data);
+            return response()->json([
+                "success" => true,
+                "data" => new SavingResource($saving),
+                "message" => "Saving was added successfully"
+            ]);
+        }
+        else {
+            return response()->json([
+                "success" => false,
+                "message" => "Saving failed",
+                "data" => [],
+            ]);
+        }
+        
+        
     }
 
     /**
