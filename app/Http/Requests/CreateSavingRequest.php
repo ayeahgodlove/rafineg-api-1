@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTransactionRequest extends FormRequest
+class CreateSavingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateTransactionRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth()->id() ? true : false;
+        return true;
     }
 
     /**
@@ -24,12 +24,10 @@ class CreateTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            "user_id" => "required",
-            "code" => "required|string",
-            "amount" => "required|decimal",
-            "telephone" => "string",
-            "package" => "string",
-            "description" => "required|string"
+            // "user" => "string",
+            "package" => "required|string",
+            "telephone" => "required|string",
+            "amount" => "required",
         ];
     }
 }
