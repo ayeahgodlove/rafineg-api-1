@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Profile;
 use App\Models\Contract;
 use App\Models\Cashbox;
+use App\Models\Saving;
+use App\Models\Referal;
 
 class User extends Authenticatable
 {
@@ -59,5 +61,15 @@ class User extends Authenticatable
     public function referal()
     {
         return $this->hasOne(Referal::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function savings()
+    {
+        return $this->hasMany(Saving::class);
     }
 }
