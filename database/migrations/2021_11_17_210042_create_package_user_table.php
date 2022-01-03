@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePackageUsersTable extends Migration
+class CreatePackageUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePackageUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('package_users', function (Blueprint $table) {
-            $table->foreignId('users_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('packages_id')->constrained()->cascadeOnDelete();
+        Schema::create('package_user', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('package_id')->constrained();
         });
     }
 
@@ -26,8 +26,6 @@ class CreatePackageUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('package_user', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('package_user');
     }
 }

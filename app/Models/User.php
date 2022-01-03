@@ -63,7 +63,7 @@ class User extends Authenticatable
         return $this->hasMany(Referal::class);
     }
 
-    public function package()
+    public function packages()
     {
         return $this->belongsToMany(Package::class);
     }

@@ -12,7 +12,7 @@ class Package extends Model
 
     protected $guarded = [];
 
-    public function user()
+    public function users()
     {
         return $this->belongsToMany(User::class);
     }

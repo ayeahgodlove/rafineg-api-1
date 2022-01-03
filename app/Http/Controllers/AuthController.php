@@ -71,10 +71,13 @@ class AuthController extends Controller
         ]);
     }
 
-    public function forgot_password(string $email)
+    public function reset_password(string $email)
     {
-        if (User::where('email', $email)->first()) {
+        if (Auth::user()->email == $email) {
             // Send email with confirmation code
+
+            // save code in password reset table
+
 
             // send response with confirmation code to be
             // saved on the state.
