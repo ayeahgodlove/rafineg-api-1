@@ -22,7 +22,6 @@
                 'stripe' => 'STRIPE',
             ];
             ?>
-            {{ dd(auth()) }}
 
         </h1>
     </div>
