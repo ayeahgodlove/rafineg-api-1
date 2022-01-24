@@ -6,13 +6,8 @@ use App\Models\Package;
 
 class SubscriptionsController extends Controller
 {
-    public function subscribe($package_id)
+    public function subscribe(Package $package_id)
     {
-        $package = Package::find($package_id);
-        // if($package)
-        // {
-        //     //
-        //     return true;
-        // }
+         
     }
 }

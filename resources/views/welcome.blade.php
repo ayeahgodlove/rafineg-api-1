@@ -16,7 +16,7 @@
     <div>
         <h1 style="text-align: center;">RAFINEG API
             <?php
-            
+
             $method = [
                 'momo' => 'MOMO',
                 'stripe' => 'STRIPE',
