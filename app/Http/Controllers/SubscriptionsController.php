@@ -4,10 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PackageResource;
 use App\Models\Package;
+use App\Models\User;
 
 class SubscriptionsController extends Controller
 {
-	public function subscribe( $id)
+	public function index($id)
+	{
+		$user = User::find($id);
+		return json_encode($user->subscriptions());
+		return response()->json([
+			'success' => true,
+			'data' => $user->subscriptions
+		]);
+	}
+
+
+	public function subscribe($id)
 	{
 		$package = Package::find($id);
 		auth()->user()->subscriptions()->attach($package->id);
@@ -16,6 +28,7 @@ class SubscriptionsController extends Controller
 			"data" =>  new PackageResource($package)
 		]);
 	}
+
 
 	public function unsubscribe($id)
 	{
@@ -27,12 +40,4 @@ class SubscriptionsController extends Controller
 			"data" => []
 		]);
 	}
-	public function subscriptions()
-	{
-		return response()->json([
-			'success' => true,
-			'data' => auth()->user()->subscriptions()
-		])
-	}
-
 }

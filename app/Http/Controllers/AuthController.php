@@ -20,16 +20,9 @@ class AuthController extends Controller
     public function signup(UserRequest $request)
     {
         $data = $request->validated();
-
-        if (str_contains($data['name'], " ")) {
-            $names = explode(' ', $data['name']);
-            $data["firstname"] = $names[0];
-            $data["lastname"] = $names[1];
-        } else {
-            $data['firstname'] = $data['name'];
-        }
-
+        $data['name'] = $data['lastName'] . '_' . $this->generateUserCode();
         $data['password'] =  Hash::make($data['password']);
+
         if (User::create($data)) {
             return response()->json([
                 "success" => true,
@@ -106,5 +99,11 @@ class AuthController extends Controller
             "success" => true,
             "message" => "Logout successful"
         ]);
+    }
+
+    private function generateUserCode(int $length = 6)
+    {
+        $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
+        return substr(str_shuffle($str_result), 0, $length);
     }
 }
