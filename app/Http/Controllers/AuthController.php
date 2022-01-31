@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\Referal;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,8 +25,6 @@ class AuthController extends Controller
         $data['code'] = $this->generateUserCode();
         $data['password'] =  Hash::make($data['password']);
 
-
-
         if ($new_user = User::create($data)) {
             $referal_code = request()->input('referalCode');
 
@@ -36,6 +35,18 @@ class AuthController extends Controller
                     'user_id' => $new_user->id
                 ]);
             }
+
+            // create user profile
+            $profile_data = [
+                'bio' => '',
+                'address' => '',
+                'gender' => 'male',
+                'date_of_birth' => Carbon::now(),
+                'image'  => '',
+            ];
+
+            // create user profile
+            $new_user->profile()->create($profile_data);
 
             return response()->json([
                 "success" => true,

@@ -18,7 +18,7 @@ class ProfilesController extends Controller
     {
         return response()->json([
             "success"   => true,
-            "data"      => ProfileResource::collection(Profile::all()),
+            "data"      => ProfileResource::collection(Profile::all())
         ]);
     }
 
