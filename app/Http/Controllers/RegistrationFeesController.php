@@ -42,6 +42,7 @@ class RegistrationFeesController extends Controller
         $data['user_id'] = auth()->user()->id;
         $data['amount'] = "30";
         $tel = $data['phone_number'];
+
         $transaction = new Payment("$tel", $data['amount']);
 
         $deposit = $transaction->pay();
@@ -53,6 +54,9 @@ class RegistrationFeesController extends Controller
             $registrationFee = RegistrationFee::create($data);
             $currentUser['is_registered'] = true;
             $currentUser->save();
+
+            // update user cashbox
+
 
             return response()->json([
                 "data" => [

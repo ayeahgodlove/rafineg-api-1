@@ -6,6 +6,7 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Models\Referal;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,10 +21,22 @@ class AuthController extends Controller
     public function signup(UserRequest $request)
     {
         $data = $request->validated();
-        $data['name'] = $data['lastName'] . '_' . $this->generateUserCode();
+        $data['code'] = $this->generateUserCode();
         $data['password'] =  Hash::make($data['password']);
 
-        if (User::create($data)) {
+
+
+        if ($new_user = User::create($data)) {
+            $referal_code = request()->input('referalCode');
+
+            if (!empty($referal_code)) {
+                Referal::create([
+                    'code' => $referal_code,
+                    'link' => '',
+                    'user_id' => $new_user->id
+                ]);
+            }
+
             return response()->json([
                 "success" => true,
                 "message" => "You account has been successfully created",
