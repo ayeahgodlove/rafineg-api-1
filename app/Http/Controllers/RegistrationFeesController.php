@@ -33,9 +33,6 @@ class RegistrationFeesController extends Controller
      */
     public function store(CreateRegistrationFeeRequest $request)
     {
-        Log::debug("registration request " . $request);
-
-
         $data = $request->validated();
         //registration fee transaction
         $data['username'] = auth()->user()->name;
@@ -55,8 +52,13 @@ class RegistrationFeesController extends Controller
             $currentUser['is_registered'] = true;
             $currentUser->save();
 
+            if (request()->has('referl_code')) {
+            }
             // update user cashbox
-
+            $currentUser->cashBox()->create([
+                'transaction_id' => $deposit->id,
+                'balance' => $data['amount']
+            ]);
 
             return response()->json([
                 "data" => [

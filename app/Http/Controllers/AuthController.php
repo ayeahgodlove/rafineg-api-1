@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\Referal;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -93,12 +94,21 @@ class AuthController extends Controller
         if (Auth::user()->email == $email) {
             // Send email with confirmation code
 
+
             // save code in password reset table
 
 
             // send response with confirmation code to be
             // saved on the state.
         }
+    }
+
+    public function change_password(Request $request)
+    {
+        $data = $request->validate([
+            'password' => 'required|string|min:6',
+            'password_confirm' => 'required|confirmed:password'
+        ]);
     }
 
     /**
