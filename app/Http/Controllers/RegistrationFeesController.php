@@ -52,13 +52,15 @@ class RegistrationFeesController extends Controller
             $currentUser['is_registered'] = true;
             $currentUser->save();
 
-            if (request()->has('referl_code')) {
-            }
+            // if (request()->has('referal_code')) {
+            // }
+
             // update user cashbox
-            $currentUser->cashBox()->create([
-                'transaction_id' => $deposit->id,
-                'balance' => $data['amount']
-            ]);
+
+            // $currentUser->cashBox()->create([
+            //     'transaction_id' => $deposit->id,
+            //     'balance' => $data['amount']
+            // ]);
 
             return response()->json([
                 "data" => [
