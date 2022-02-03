@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContractsController;
+use App\Http\Controllers\NjangiGroupController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\ProfilesController;
@@ -31,29 +32,27 @@ Route::post('verify/${method}', [AuthController::class, 'verify_client']);
 Route::get('verification-code/${method}', [AuthController::class, 'send_verification_code']);
 
 Route::get('test', fn () => response()->json([
-	"success" => true,
-	"data" => UserResource::collection(User::all()),
+    "success" => true,
+    "data" => UserResource::collection(User::all()),
 ]));
 
 Route::middleware('auth:sanctum')->group(function () {
-	Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-	Route::apiResource('users', UsersController::class);
-	Route::apiResource('packages', PackagesController::class);
-	Route::apiResource('profiles', ProfilesController::class);
-	Route::apiResource('contracts', ContractsController::class);
-	Route::apiResource('referals', ReferalController::class);
-	Route::apiResource('registration', RegistrationFeesController::class);
-	Route::apiResource('savings', SavingsController::class);
-	Route::post('subscribe/{package_id}', [SubscriptionsController::class, 'subscribe']);
-	Route::post('unsubscribe/{package_id}', [SubscriptionsController::class, 'unsubscribe']);
-	Route::get('subscriptions/{user}', [SubscriptionsController::class, 'index']);
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::apiResource('users', UsersController::class);
+    Route::apiResource('packages', PackagesController::class);
+    Route::apiResource('profiles', ProfilesController::class);
+    Route::apiResource('contracts', ContractsController::class);
+    Route::apiResource('referals', ReferalController::class);
+    Route::apiResource('registration', RegistrationFeesController::class);
+    Route::apiResource('savings', SavingsController::class);
+    Route::apiResource('njangiGroups', NjangiGroupController::class)->except(['create', 'show', 'edit']);
+    Route::post('subscribe/{package_id}', [SubscriptionsController::class, 'subscribe']);
+    Route::post('unsubscribe/{package_id}', [SubscriptionsController::class, 'unsubscribe']);
+    Route::get('subscriptions/{user}', [SubscriptionsController::class, 'index']);
 });
 Route::fallback(function () {
-	return response()->json([
-		"success" => false,
-		"message" => 'Page Not Found. If error persists, contact info@website.com'
-	], 404);
+    return response()->json([
+        "success" => false,
+        "message" => 'Page Not Found. If error persists, contact info@website.com'
+    ], 404);
 });
-
-//momo endpoints
-// Route::get('/', [TestsMomoController::class, 'confirmOrder']);

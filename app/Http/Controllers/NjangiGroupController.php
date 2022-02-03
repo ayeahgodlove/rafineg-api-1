@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NjangiGroupRequest;
+use App\Http\Resources\NjangiGroupResource;
 use App\Models\NjangiGroup;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,10 @@ class NjangiGroupController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            "success" => true,
+            "data" => NjangiGroupResource::collection(NjangiGroup::all())
+        ]);
     }
 
     /**
@@ -33,16 +38,23 @@ class NjangiGroupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NjangiGroupRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'minimum_savings' => 'integer|nullable',
-            'maximum_savings' => 'integer|nullabe',
-        ]);
-
-        NjangiGroup::create($data);
+        $data = $request->validated();
+        $njangiGroup = NjangiGroup::create($data);
+        if ($njangiGroup) {
+            return response()->json([
+                "success" => true,
+                "message" => "New group created successfully",
+                "data" => new NjangiGroupResource($njangiGroup)
+            ]);
+        } else {
+            return response()->json([
+                "success" => false,
+                "message" => "Could not create group because an success occured",
+                "data" => null
+            ]);
+        }
     }
 
     /**
@@ -74,9 +86,15 @@ class NjangiGroupController extends Controller
      * @param  \App\Models\NjangiGroup  $njangiGroup
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NjangiGroup $njangiGroup)
+    public function update(NjangiGroupRequest $request, NjangiGroup $njangiGroup)
     {
-        //
+        $data = $request->validated();
+        $njangiGroup->update($data);
+        return response()->json([
+            "success" => true,
+            "message" => "Njangi group info updated successfully",
+            "data" => new NjangiGroupResource($njangiGroup)
+        ]);
     }
 
     /**
@@ -87,6 +105,19 @@ class NjangiGroupController extends Controller
      */
     public function destroy(NjangiGroup $njangiGroup)
     {
-        //
+        $isDeleted = $njangiGroup->delete();
+        if ($isDeleted) {
+            return response()->json([
+                "success" => true,
+                "message" => "Njangi group deleted successfully",
+                "data" => null
+            ]);
+        }
+
+        return response()->json([
+            "success" => false,
+            "message" => "Njangi group could not be deleted",
+            "data" => null
+        ]);
     }
 }
