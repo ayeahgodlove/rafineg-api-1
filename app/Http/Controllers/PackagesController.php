@@ -36,12 +36,6 @@ class PackagesController extends Controller
             $data['image'] = $request->file('image')->move('packages');
         }
 
-        return response()->json([
-            "data" => $data,
-            "success" => true
-        ]);
-
-
         $package = Package::create($data);
 
         return response()->json([
@@ -57,9 +51,10 @@ class PackagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package)
+    public function show(int $id)
     {
-        if ($package->exits()) {
+        $package = Package::find($id);
+        if ($package) {
             return response()->json([
                 "success" => true,
                 "data" => new PackageResource($package),

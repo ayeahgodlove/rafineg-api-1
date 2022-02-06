@@ -13,6 +13,8 @@ use App\Models\User;
 use App\Http\Controllers\RegistrationFeesController;
 use App\Http\Controllers\SavingsController;
 use App\Http\Controllers\SubscriptionsController;
+use App\Http\Controllers\TransactionsController;
+use Laravel\Cashier\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +50,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('njangiGroups', NjangiGroupController::class)->except(['create', 'show', 'edit']);
     Route::post('subscribe/{package_id}', [SubscriptionsController::class, 'subscribe']);
     Route::post('unsubscribe/{package_id}', [SubscriptionsController::class, 'unsubscribe']);
-    Route::get('subscriptions/{user}', [SubscriptionsController::class, 'index']);
+    Route::get('subscriptions', [SubscriptionsController::class, 'index']);
+    // Route::post('payments/sendMoney', [PaymentController::class, 'sendMoney']);
 });
 Route::fallback(function () {
     return response()->json([

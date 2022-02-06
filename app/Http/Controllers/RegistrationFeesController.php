@@ -7,7 +7,6 @@ use App\Http\Resources\UserResource;
 use App\Http\Requests\CreateRegistrationFeeRequest;
 use App\Models\RegistrationFee;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 use Malico\MeSomb\Payment;
 
 class RegistrationFeesController extends Controller
