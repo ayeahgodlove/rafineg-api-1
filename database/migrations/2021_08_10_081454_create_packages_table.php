@@ -19,9 +19,9 @@ class CreatePackagesTable extends Migration
             $table->string('code', 10);
             $table->text('description');
             $table->string('image');
-            $table->decimal('amount');
-            $table->integer('low_investment_limit');
-            $table->integer('high_investment_limit');
+            $table->integer('fee');
+            $table->integer('low_investment_limit')->default('0');
+            $table->integer('high_investment_limit')->default('9999999');
             $table->timestamps();
         });
     }

@@ -8,13 +8,11 @@ use App\Models\User;
 
 class SubscriptionsController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-        $user = User::find($id);
-        return json_encode($user->subscriptions());
         return response()->json([
             'success' => true,
-            'data' => $user->subscriptions
+            'data' => auth()->user()->subscriptions
         ]);
     }
 
