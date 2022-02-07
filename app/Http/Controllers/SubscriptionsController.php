@@ -22,6 +22,15 @@ class SubscriptionsController extends Controller
 
     public function subscribe($id)
     {
+        if (auth()->user()->subscriptions()->find(auth()->user()->id)) {
+            return response()->json([
+                "message" => "Aleady subscribed to this package",
+                "data" => null,
+                "success" => false
+            ]);
+        }
+
+
         try {
             $package = Package::find($id);
             auth()->user()->subscriptions()->attach($package->id);
