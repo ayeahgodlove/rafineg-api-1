@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\PackageResource;
+use App\Http\Resources\UserResource;
 use App\Models\Package;
 use App\Models\User;
 use PhpParser\Node\Stmt\TryCatch;
@@ -57,5 +58,22 @@ class SubscriptionsController extends Controller
                 "data" =>  null
             ]);
         }
+    }
+
+    public function subscribers(int $packageId)
+    {
+        $package = Package::find($packageId);
+        if ($package && $package->users()->first()) {
+            return response()->json([
+                "success" => true,
+                "data" => UserResource::collection($package->users),
+                "message" => ""
+            ]);
+        }
+        return response()->json([
+            "success" => false,
+            "data" => null,
+            "message" => "Package does no exist"
+        ]);
     }
 }

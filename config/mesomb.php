@@ -15,7 +15,7 @@ return [
      *
      * @var string
      */
-    'key' => env('MeSomb_APP_KEY'),
+    'key' => env('MESOMB_APP_KEY'),
 
     /**
      * MeSomb API Application Key
@@ -23,7 +23,7 @@ return [
      *
      * @var string
      */
-    'api_key' => env('MeSomb_API_KEY'),
+    'api_key' => env('MESOMB_APP_KEY'),
 
     /**
      * PIN used for MeSomb Pin
@@ -31,7 +31,7 @@ return [
      *
      * @var int|string
      */
-    'pin' => env('MeSomb_PIN', null),
+    'pin' => env('MESOMB_PIN', null),
 
     /**
      * Supported Payment Methods
@@ -58,7 +58,7 @@ return [
 
     /**
      * Failed Payments
-     * 
+     *
      * @var array
      */
     'failed_payments' => [

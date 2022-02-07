@@ -36,37 +36,26 @@ class RegistrationFeesController extends Controller
         //registration fee transaction
         $data['username'] = auth()->user()->name;
         $data['user_id'] = auth()->user()->id;
-        $data['amount'] = "30";
+        $data['amount'] = 30;
         $tel = $data['phone_number'];
 
-        $transaction = new Payment("$tel", $data['amount']);
+        $transaction = new Payment($tel, $data['amount']);
 
         $deposit = $transaction->pay();
         $currentUser = User::find(auth()->user()->id);
 
-        $registrationFee = null;
         if ($deposit->success) {
             // Fire some event, send payout email
+            $data['is_registered'] = true;
             $registrationFee = RegistrationFee::create($data);
-            $currentUser['is_registered'] = true;
-            $currentUser->save();
-
-            // if (request()->has('referal_code')) {
-            // }
-
-            // update user cashbox
-
-            // $currentUser->cashBox()->create([
-            //     'transaction_id' => $deposit->id,
-            //     'balance' => $data['amount']
-            // ]);
 
             return response()->json([
                 "data" => [
                     "registrationFee" => new RegistrationFeeResource($registrationFee),
                     "user" => new UserResource($currentUser),
                 ],
-                "success" => true
+                "success" => true,
+                "message" => "Payment successfull"
             ]);
         }
 

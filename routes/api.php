@@ -50,7 +50,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('njangiGroups', NjangiGroupController::class)->except(['create', 'show', 'edit']);
     Route::post('subscribe/{package_id}', [SubscriptionsController::class, 'subscribe']);
     Route::post('unsubscribe/{package_id}', [SubscriptionsController::class, 'unsubscribe']);
+    Route::get('subscribers/{package_id}', [SubscriptionsController::class, 'subscribers']);
     Route::get('subscriptions', [SubscriptionsController::class, 'index']);
+    // Route::get('subscribers', [SubscriptionsController::class, 'index']);
     // Route::post('payments/sendMoney', [PaymentController::class, 'sendMoney']);
 });
 Route::fallback(function () {

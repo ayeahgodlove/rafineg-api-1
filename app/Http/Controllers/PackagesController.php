@@ -6,6 +6,7 @@ use App\Http\Requests\PackageRequest;
 use App\Models\Package;
 use App\Http\Requests\CreatePackageRequest;
 use App\Http\Resources\PackageResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 
 class PackagesController extends Controller
