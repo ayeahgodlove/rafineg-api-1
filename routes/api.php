@@ -29,7 +29,7 @@ use Laravel\Cashier\Http\Controllers\PaymentController;
 
 Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']);
-Route::get('reset-password', [AuthController::class, 'reset_password']);
+Route::post('reset-password', [AuthController::class, 'reset_password']);
 Route::post('verify/${method}', [AuthController::class, 'verify_client']);
 Route::post('forgot-password', [AuthController::class, 'forgot_password']);
 Route::post('forgot-password/confirm-code', [AuthController::class, 'confirm_password_reset_code']);

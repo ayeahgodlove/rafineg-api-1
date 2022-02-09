@@ -170,17 +170,20 @@ class AuthController extends Controller
     {
         $data = $request->validate([
             "password" => "required|min:6",
-            "passwordConfirm" => "required|confirmed",
+            'password' => 'min:6|required_with:passwordConfirm|same:passwordConfirm',
+            'passwordConfirm' => 'min:6',
             "email" => "required|email"
         ]);
 
-        $user = User::where('email', $data['email']);
+        $user = User::where('email', $data['email'])->first();
+        // echo json_encode($user);
         if ($user) {
-            $user->password = Hash::make($data['password']);
-            $user->update();
+            $newPassword = Hash::make($data['password']);
+            $user->update(["password" => $newPassword]);
             return response()->json([
                 "success" => true,
-                "message" => "Password for " .  $data['email'] . " has been reset successfully"
+                "message" => "Password for " . $data['email'] . " has been reset successfully",
+                "data" => new UserResource($user)
             ]);
         }
     }
