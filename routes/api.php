@@ -48,7 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('referals', ReferalController::class);
     Route::apiResource('registration', RegistrationFeesController::class);
     Route::apiResource('savings', SavingsController::class);
-    Route::apiResource('njangiGroups', NjangiGroupController::class)->except(['create', 'show', 'edit']);
+    Route::apiResource('njangi-groups', NjangiGroupController::class)->except(['create', 'show', 'edit']);
+    Route::apiResource('cash-transfers', NjangiGroupController::class)->except(['create', 'edit']);
     Route::post('subscribe/{package_id}', [SubscriptionsController::class, 'subscribe']);
     Route::post('unsubscribe/{package_id}', [SubscriptionsController::class, 'unsubscribe']);
     Route::get('subscribers/{package_id}', [SubscriptionsController::class, 'subscribers']);
