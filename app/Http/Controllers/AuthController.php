@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
+use App\Mail\ForgotPasswordEmail;
+use App\Models\ForgotPassword;
 use App\Models\User;
 use App\Models\Referal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -89,17 +92,96 @@ class AuthController extends Controller
         ]);
     }
 
-    public function reset_password(string $email)
+    public function forgot_password(Request $request)
     {
-        if (Auth::user()->email == $email) {
-            // Send email with confirmation code
+        $data = $request->validate([
+            "email" => "required|email"
+        ]);
 
+        $user = User::where('email', $request->email)->get();
+        if (!$user) {
+            return response()->json([
+                "success" => false,
+                "message" => "No user with such email exists. Try creating an account"
+            ]);
+        }
 
-            // save code in password reset table
+        // check if there exist a record for reset password and delete it
+        $prevForgotPasswordRecord = ForgotPassword::where('email', $request->email)->get();
 
+        if (count($prevForgotPasswordRecord) == 1) {
+            $prevForgotPasswordRecord->delete();
+        }
 
-            // send response with confirmation code to be
-            // saved on the state.
+        $data['verification_code'] = $this->generatePasswordResetCode();
+        ForgotPassword::create($data);
+
+        Mail::to($data['email'])->send(new ForgotPasswordEmail($data['verification_code']));
+        return response()->json([
+            "success" => true,
+            "message" => "Password reset code has been sent to " .  $data['email'],
+            "data" => [
+                "email" => $data['email']
+            ]
+        ]);
+    }
+
+    /**
+     * Confirm password reset code
+     * @param request: Contains the emal address for the
+     * app to send reset code
+     * @return apiResponse to client
+     */
+    public function confirm_password_reset_code(Request $request)
+    {
+        $response = [
+            "success" => false,
+            "message" => null,
+            "data" => null,
+        ];
+
+        $forgotPassword = ForgotPassword::where("verification_code", $request->code)
+            ->where("email", $request->email)->first();
+
+        // return response()->json($forgotPassword);
+
+        if ($forgotPassword->is_used == false) {
+            $forgotPassword->is_used = true;
+            $forgotPassword->update();
+            $response['message'] = "Code verified successfully";
+        } elseif ($forgotPassword->expires_on < Carbon::now()) {
+            $response['message'] = "Reset code has expired";
+            return response()->json($response);
+        } else {
+            $forgotPassword->is_used = true;
+            $response['message'] = "Reset link verified successfully";
+            $response['success'] = true;
+            return response()->json($response);
+        }
+    }
+
+    /**
+     * Confirm password reset code
+     * @param request (mixed) Contains the new password
+     * and the confirme password
+     * @return apiResponse to client
+     */
+    public function reset_password(Request $request)
+    {
+        $data = $request->validate([
+            "password" => "required|min:6",
+            "passwordConfirm" => "required|confirmed",
+            "email" => "required|email"
+        ]);
+
+        $user = User::where('email', $data['email']);
+        if ($user) {
+            $user->password = Hash::make($data['password']);
+            $user->update();
+            return response()->json([
+                "success" => true,
+                "message" => "Password for " .  $data['email'] . " has been reset successfully"
+            ]);
         }
     }
 
@@ -126,9 +208,11 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
+        // auth()->user()->tokens()->delete();
+        $request->user()->tokens()->delete();
+        // auth()->user()->currentAccessToken()->delete();
         return response()->json([
             "success" => true,
             "message" => "Logout successful"
@@ -136,6 +220,12 @@ class AuthController extends Controller
     }
 
     private function generateUserCode(int $length = 6)
+    {
+        $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
+        return substr(str_shuffle($str_result), 0, $length);
+    }
+
+    private function generatePasswordResetCode(int $length = 6)
     {
         $str_result = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
         return substr(str_shuffle($str_result), 0, $length);

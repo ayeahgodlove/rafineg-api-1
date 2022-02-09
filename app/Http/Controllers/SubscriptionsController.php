@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PackageResource;
 use App\Http\Resources\UserResource;
 use App\Models\Package;
-use App\Models\User;
-use PhpParser\Node\Stmt\TryCatch;
+
 use Throwable;
 
 class SubscriptionsController extends Controller
@@ -30,7 +29,6 @@ class SubscriptionsController extends Controller
             ]);
         }
 
-
         try {
             $package = Package::find($id);
             auth()->user()->subscriptions()->attach($package->id);
@@ -39,11 +37,11 @@ class SubscriptionsController extends Controller
                 "message" => "You have subscribe to this package",
                 "data" =>  new PackageResource($package)
             ]);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return response()->json([
                 "success" => false,
                 "message" => $th->getMessage(),
-                "data" =>  null
+                "data" =>  []
             ]);
         }
     }
@@ -51,6 +49,7 @@ class SubscriptionsController extends Controller
 
     public function unsubscribe($id)
     {
+
         try {
             $package = Package::find($id);
             auth()->user()->subscriptions()->detach($package);
@@ -60,11 +59,11 @@ class SubscriptionsController extends Controller
                 "message" => "You have unscribed to this package",
                 "data" => []
             ]);
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             return response()->json([
                 "success" => false,
                 "message" => $th->getMessage(),
-                "data" =>  null
+                "data" =>  []
             ]);
         }
     }

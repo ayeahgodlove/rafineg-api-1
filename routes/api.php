@@ -31,7 +31,8 @@ Route::post('signup', [AuthController::class, 'signup']);
 Route::post('signin', [AuthController::class, 'signin']);
 Route::get('reset-password', [AuthController::class, 'reset_password']);
 Route::post('verify/${method}', [AuthController::class, 'verify_client']);
-Route::get('verification-code/${method}', [AuthController::class, 'send_verification_code']);
+Route::post('forgot-password', [AuthController::class, 'forgot_password']);
+Route::post('forgot-password/confirm-code', [AuthController::class, 'confirm_password_reset_code']);
 
 Route::get('test', fn () => response()->json([
     "success" => true,
