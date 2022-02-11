@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReferalRequest;
 use App\Http\Resources\ReferalResource;
 use App\Models\Referal;
-use Illuminate\Http\Request;
 
 class ReferalController extends Controller
 {

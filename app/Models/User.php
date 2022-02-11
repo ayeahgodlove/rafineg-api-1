@@ -57,7 +57,7 @@ class User extends Authenticatable
         return $this->hasOne(Cashbox::class);
     }
 
-    public function referal()
+    public function referals()
     {
         return $this->hasMany(Referal::class);
     }
