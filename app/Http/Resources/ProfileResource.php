@@ -17,7 +17,7 @@ class ProfileResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "user" => new UserResource(User::find($this->user_id)),
+            "user_id" => $this->user_id,
             "bio" => $this->bio,
             "address" => $this->address,
             "gender" => $this->gender,
