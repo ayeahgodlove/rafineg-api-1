@@ -31,6 +31,12 @@ class UserRequest extends FormRequest
             "email" => "required|string|unique:users,email",
             "password" => "required|string|min:6",
             "phone_number" => "integer|required|unique:users,phone_number",
+            // others
+            "bio" => "string|nullable",
+            "address" => "string|nullable",
+            "gender" => "string|nullable",
+            "date_of_birth" => "date|nullable",
+            "image" => "string|nullable|max:1000",
             // "registration_fee_paid" => "required"
         ];
     }

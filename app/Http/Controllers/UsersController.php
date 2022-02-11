@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\ProfileResource;
 use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
@@ -71,13 +72,27 @@ class UsersController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
-        if ($user->update($data)) {
+
+        // create user profile
+        $profile_data = [
+            'bio' => $request->bio,
+            'address' => $request->address,
+            'gender' => $request->gender,
+            'date_of_birth' => $request->date_of_birth,
+            'image'  => $request->image,
+        ];
+
+        // create user profile
+        $user->profile()->update($profile_data);
+        $feedback = $user->update($data);
+        if ($feedback) {
             return response()->json([
                 "success" => true,
-                "data" => new UserResource($user),
+                "data" => [new UserResource($user), $profile_data],
                 "message" => "User has been updated successfully"
             ]);
         }
+
         return response()->json([
             "success" => false,
             "data" => new UserResource($user),
