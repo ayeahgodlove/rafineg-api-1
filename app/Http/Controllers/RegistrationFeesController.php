@@ -8,6 +8,7 @@ use App\Http\Requests\CreateRegistrationFeeRequest;
 use App\Models\RegistrationFee;
 use App\Models\User;
 use Malico\MeSomb\Payment;
+use Illuminate\Support\Facades\Log;
 
 class RegistrationFeesController extends Controller
 {
@@ -32,6 +33,7 @@ class RegistrationFeesController extends Controller
      */
     public function store(CreateRegistrationFeeRequest $request)
     {
+        Log::debug("registration request " . $request);
         $data = $request->validated();
         //registration fee transaction
         $data['username'] = auth()->user()->name;

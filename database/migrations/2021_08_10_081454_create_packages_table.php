@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Validator;
 
 class CreatePackagesTable extends Migration
 {
@@ -19,9 +20,9 @@ class CreatePackagesTable extends Migration
             $table->string('code', 10);
             $table->text('description');
             $table->string('image');
-            $table->integer('fee');
-            $table->integer('low_investment_limit')->default('0');
-            $table->integer('high_investment_limit')->default('9999999');
+            $table->float('amount', 8, 2);
+            $table->float('low_investment_limit', 8, 2);
+            $table->float('high_investment_limit', 8, 2);
             $table->timestamps();
         });
     }
