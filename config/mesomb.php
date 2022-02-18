@@ -15,7 +15,7 @@ return [
      *
      * @var string
      */
-    'key' => env('MESOMB_APP_KEY'),
+    'key' => env('MeSomb_APP_KEY'),
 
     /**
      * MeSomb API Application Key
@@ -23,7 +23,7 @@ return [
      *
      * @var string
      */
-    'api_key' => env('MESOMB_APP_KEY'),
+    'api_key' => env('MeSomb_API_KEY'),
 
     /**
      * PIN used for MeSomb Pin

@@ -8,6 +8,7 @@ use App\Http\Requests\CreateRegistrationFeeRequest;
 use App\Models\RegistrationFee;
 use App\Models\User;
 use Malico\MeSomb\Payment;
+use Throwable;
 
 class RegistrationFeesController extends Controller
 {
@@ -38,11 +39,10 @@ class RegistrationFeesController extends Controller
         $data['user_id'] = auth()->user()->id;
         $data['amount'] = 30;
         $tel = $data['phone_number'];
+        $currentUser = auth()->user();
 
-        $transaction = new Payment($tel, $data['amount']);
-
-        $deposit = $transaction->pay();
-        $currentUser = User::find(auth()->user()->id);
+        $payment_request = new Payment("$tel", $data['amount']);
+        $deposit = $payment_request->pay();
 
         if ($deposit->success) {
             // Fire some event, send payout email
@@ -59,10 +59,11 @@ class RegistrationFeesController extends Controller
             ]);
         }
 
+        /* Registration failed */
         return response()->json([
             "success" => false,
-            "message" => "payment failed",
-            "data" => [],
+            "message" => "Payment failed",
+            "data" => null
         ]);
     }
 
@@ -85,32 +86,6 @@ class RegistrationFeesController extends Controller
             "success" => false,
             "data" => null,
             "message" => "RegistrationFee does not exist."
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(CreateRegistrationFeeRequest $request, $id)
-    {
-        $registrationFee = RegistrationFee::find($id);
-        if ($registrationFee->exits()) {
-            $data = $request->validated();
-            $registrationFee->update($data);
-            return response()->json([
-                "success" => true,
-                "data" => new RegistrationFeeResource($registrationFee),
-                "message" => "Registration fee has been updated successfully"
-            ]);
-        }
-        return response()->json([
-            "success" => false,
-            "data" => null,
-            "message" => "RegistrationFee could not be updated"
         ]);
     }
 
