@@ -34,8 +34,6 @@ class RegistrationFeesController extends Controller
     public function store(CreateRegistrationFeeRequest $request)
     {
         Log::debug("registration request " . $request);
-
-
         $data = $request->validated();
         //registration fee transaction
         $data['username'] = auth()->user()->name;
