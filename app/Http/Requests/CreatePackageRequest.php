@@ -24,13 +24,13 @@ class CreatePackageRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|unique:posts|max:255",
+            "name" => "required|unique:packages|max:255",
             "code" => "string",
             "image" => "string",
             "description" => "required|string",
-            "amount" => "float",
-            "low_investment_limit" => "required|float",
-            "high_investment_limit" => "required|float",
+            "amount" => "required",
+            "low_investment_limit" => "required",
+            "high_investment_limit" => "required",
         ];
     }
 }
