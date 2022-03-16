@@ -183,6 +183,7 @@ class AuthController extends Controller
             $user->update(["password" => $newPassword]);
             return response()->json([
                 "success" => true,
+                "errors" => [],
                 "message" => "Password for " . $data['email'] . " has been reset successfully",
                 "data" => new UserResource($user)
             ]);

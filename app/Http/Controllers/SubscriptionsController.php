@@ -14,7 +14,9 @@ class SubscriptionsController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => auth()->user()->subscriptions
+            'data' => PackageResource::collection(auth()->user()->subscriptions),
+            'message' => '',
+            ''
         ]);
     }
 
