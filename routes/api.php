@@ -8,11 +8,11 @@ use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\ReferalController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use Illuminate\Support\Str;
 use App\Http\Controllers\RegistrationFeesController;
 use App\Http\Controllers\SavingsController;
 use App\Http\Controllers\SubscriptionsController;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +32,35 @@ Route::post('verify/${method}', [AuthController::class, 'verify_client']);
 Route::post('forgot-password', [AuthController::class, 'forgot_password']);
 Route::post('forgot-password/confirm-code', [AuthController::class, 'confirm_password_reset_code']);
 
-Route::get('test', fn () => response()->json([
-    "success" => true,
-    "data" => UserResource::collection(User::all()),
-]));
+Route::post('test', function () {
+    $request_id = (string) Str::uuid();
+    $api_version = config('mesomb.version');
+    $api_url = "https://mesomb.hachther.com/api/{$api_version}/payment/online/";
+
+    $headers = [
+        'X-MeSomb-Application'      => config('mesomb.key'),
+        'X-MeSomb-RequestId'        => $request_id,
+        // 'X-MeSomb-OperationMode'    => 'asynchronous'
+    ];
+
+    $data = [
+        "service" => 'MTN',
+        "amount" => 10,
+        "payer" => "237672374414",
+    ];
+
+    try {
+        $response = Http::withHeaders($headers)->post($api_url, $data);
+        return json_encode($response);
+    } catch (\Throwable $th) {
+        // refund the amount to payer
+
+        return json_encode([
+            "success" => false,
+            "message" => $th->getMessage()
+        ]);
+    }
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
