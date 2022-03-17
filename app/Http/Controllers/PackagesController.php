@@ -76,10 +76,10 @@ class PackagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PackageRequest $request, $id)
+    public function update(CreatePackageRequest $request, $id)
     {
         $package = Package::find($id);
-        if ($package->exits()) {
+        if ($package->exists()) {
             $data = $request->validated();
             $package->update($data);
             return response()->json([

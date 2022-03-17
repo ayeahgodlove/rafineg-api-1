@@ -25,11 +25,11 @@ class PackageRequest extends FormRequest
     {
         return [
             "name" => "string|required",
-            "code" => "string|required|unique:packages,code",
+            // "code" => "string|required",
             "image" => "string",
             "description" => "string|required",
             "fee" => "numeric|required",
-            "low_investment_limit" => "numeric|required",
+            "low_investment_limit" => "numeric",
             "high_investment_limit" => "numeric",
         ];
     }
