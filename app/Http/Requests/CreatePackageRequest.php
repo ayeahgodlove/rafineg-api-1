@@ -25,7 +25,7 @@ class CreatePackageRequest extends FormRequest
     {
         return [
             "name" => "string|required",
-            "code" => "string|required",
+            // "code" => "string|required",
             "image" => "string",
             "description" => "string|required",
             "fee" => "numeric|required",
