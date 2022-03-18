@@ -103,7 +103,7 @@ class PackagesController extends Controller
     public function destroy($id)
     {
         $package = Package::find($id);
-        if ($package->exits()) {
+        if ($package->exists()) {
             if ($package->delete()) {
                 return response()->json([
                     "success" => true,
