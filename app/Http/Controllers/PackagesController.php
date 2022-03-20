@@ -32,8 +32,10 @@ class PackagesController extends Controller
     public function store(CreatePackageRequest $request)
     {
         $data = $request->validated();
+
         if (request()->hasFile('image')) {
-            $data['image'] = $request->file('image')->move('packages');
+            $path = $request->file('image')->store('packages');
+            $data->image = $path;
         }
 
         $package = Package::create($data);
